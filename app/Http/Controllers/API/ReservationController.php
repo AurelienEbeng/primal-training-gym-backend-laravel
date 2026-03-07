@@ -24,8 +24,8 @@ class ReservationController extends Controller
                 "id" => $reservation->id,
                 "name" => $reservation->name,
                 "classType" => $reservation->classType,
-                "time" => $reservation->time,
-                "date" => $reservation->date,
+                "time" => $reservation->time->format('H:i'),
+                "date" => $reservation->date->format('Y-m-d'),
             ];
         });
 
