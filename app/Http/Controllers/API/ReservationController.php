@@ -24,7 +24,7 @@ class ReservationController extends Controller
                 "id" => $reservation->id,
                 "name" => $reservation->name,
                 "classType" => $reservation->classType,
-                "time" => $reservation->time->format('H:i'),
+                "time" => $reservation->time->format('H:i A'),
                 "date" => $reservation->date->format('Y-m-d'),
             ];
         });
@@ -46,7 +46,7 @@ class ReservationController extends Controller
             'date' => 'required|date'
         ]);
 
-        /*[$isPast, $errorMessage] = $this->service->isClassInThePast($validated['date'], $validated['classType']);
+        [$isPast, $errorMessage] = $this->service->isClassInThePast($validated['date'], $validated['classType']);
 
         if ($isPast) {
             return response()->json($errorMessage, 400);
@@ -60,15 +60,9 @@ class ReservationController extends Controller
 
         if (!$isValid) {
             return response()->json($errorMessage, 400);
-        }*/
+        }
 
-        //$reservation = Reservation::create($validated);
-        $reservation = Reservation::create([
-            'name'=> $request->name,
-            'time'=> $request->time,
-            'date'=> $request->date,
-            'classType'=> $request->classType,
-        ]);
+        $reservation = Reservation::create($validated);
 
         return response()->json($reservation);
     }
