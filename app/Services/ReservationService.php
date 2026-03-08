@@ -59,7 +59,6 @@ class ReservationService
                 $isValid = false;
                 $errorMessage = "The time choosen for weekday strength classes was not 6AM";
             }
-
         } elseif ($classType === "Conditioning") {
 
             if (($isHoliday || $isWeekend) && $time !== $this->tenAm) {
@@ -69,7 +68,6 @@ class ReservationService
                 $isValid = false;
                 $errorMessage = "The time choosen for weekday conditioning classes was not 8AM";
             }
-
         } elseif ($classType === "Community Classes") {
 
             if ($isWeekend) {
@@ -81,7 +79,6 @@ class ReservationService
                     $errorMessage = "The time choosen for weekday community classes was not 8AM";
                 }
             }
-
         } else {
             $isValid = false;
             $errorMessage = "We do not offer selected classes";
@@ -111,14 +108,13 @@ class ReservationService
             return [true, $error];
         }
 
-        if ($currentTime > $this->tenAm) {
-            return [true, $error];
-        }
-
-        $isHoliday = $this->isHoliday($date);
-        $isWeekend = $this->isWeekend($date);
-
         if ($date->eq($today)) {
+            if ($currentTime > $this->tenAm) {
+                return [true, $error];
+            }
+
+            $isHoliday = $this->isHoliday($date);
+            $isWeekend = $this->isWeekend($date);
 
             if ($classType === "Strength") {
 
@@ -129,7 +125,6 @@ class ReservationService
                 if (($isHoliday || $isWeekend) && $currentTime > $this->eightAm) {
                     return [true, $error];
                 }
-
             } elseif ($classType === "Conditioning") {
 
                 if (!$isHoliday && !$isWeekend && $currentTime > $this->eightAm) {
@@ -139,7 +134,6 @@ class ReservationService
                 if (($isHoliday || $isWeekend) && $currentTime > $this->tenAm) {
                     return [true, $error];
                 }
-
             } elseif ($classType === "Community Classes") {
 
                 if (!$isHoliday && !$isWeekend && $currentTime > $this->eightAm) {
